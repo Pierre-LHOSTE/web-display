@@ -19,12 +19,7 @@ export default function FlipClock() {
 	const minutes = time
 		.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
 		.split(":")[1];
-	const dayName =
-		time
-			.toLocaleDateString("fr-FR", { weekday: "long" })
-			.charAt(0)
-			.toUpperCase() +
-		time.toLocaleDateString("fr-FR", { weekday: "long" }).slice(1);
+	const dayName = time.toLocaleDateString("fr-FR", { weekday: "long" });
 	const day = String(time.getDate()).padStart(2, "0");
 	const monthName = time.toLocaleDateString("fr-FR", { month: "short" });
 

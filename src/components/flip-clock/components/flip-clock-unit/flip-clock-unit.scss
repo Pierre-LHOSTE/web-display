@@ -1,0 +1,152 @@
+.flip-clock-unit {
+  position: relative;
+
+  --offset: 2px;
+  --duration: 0.5s;
+  --border-radius: 16px;
+
+  span {
+    font-family: "JetBrains Mono";
+    font-weight: 700;
+    font-size: 256px;
+
+    display: flex;
+    align-items: flex-start;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    line-height: 1;
+    width: 100%;
+  }
+
+  .current {
+    color: transparent;
+    user-select: text;
+    z-index: 2;
+    position: relative;
+  }
+
+  .panels {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    perspective: 24cm;
+
+    > div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      overflow: hidden;
+
+      span {
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        height: calc(50% - var(--offset));
+        overflow: hidden;
+        position: absolute;
+        background-color: var(--flip-background);
+        color: var(--flip-text-color);
+        border: 1px solid var(--flip-border-color);
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: var(--flip-shadow-color);
+          opacity: 0;
+        }
+      }
+
+      &.flipper {
+        transform-origin: center center;
+
+        .rotate {
+          transform: rotateX(180deg);
+          align-items: flex-end;
+          border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+      }
+
+      &.bottom {
+        span {
+          border-radius: 0 0 var(--border-radius) var(--border-radius);
+          top: calc(50% + var(--offset));
+          align-items: flex-end;
+        }
+      }
+    }
+
+    &.flipping {
+      .top {
+        span::after {
+          animation: shadow-top var(--duration) linear forwards;
+        }
+      }
+      .bottom {
+        span::after {
+          animation: shadow-bottom var(--duration) linear forwards;
+        }
+      }
+
+      .flipper {
+        animation: flip var(--duration) linear forwards;
+
+        span::after {
+          animation: shadow-flipper var(--duration) linear forwards;
+        }
+      }
+    }
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+@keyframes shadow-top {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shadow-flipper {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shadow-bottom {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

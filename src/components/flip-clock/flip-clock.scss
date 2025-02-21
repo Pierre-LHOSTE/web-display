@@ -1,0 +1,30 @@
+#flip-clock {
+  position: relative;
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+
+  > div {
+    display: flex;
+    gap: 32px;
+
+    &#day-full div:last-child {
+      flex: 1;
+    }
+
+    &#day-name > div {
+      flex: 1;
+    }
+
+    &:not(#time) {
+      font-size: 32px;
+    }
+  }
+
+  > div:not(#time) span {
+    font-size: 144px;
+  }
+  > #time > div {
+    flex: 1;
+  }
+}
